@@ -28,7 +28,7 @@ enum camera_mode {
 	CAMERAMODE_DEATH,
 };
 
-#define CAMERA_DEFAULT_FOV 70.0F
+#define CAMERA_DEFAULT_FOV 40.0F
 #define CAMERA_MAX_FOV 100.0F
 
 extern enum camera_mode camera_mode;
