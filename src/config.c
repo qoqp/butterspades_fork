@@ -108,6 +108,7 @@ void config_save() {
 	config_seti("client", "smooth_fog", settings.smooth_fog);
 	config_seti("client", "ambient_occlusion", settings.ambient_occlusion);
 	config_setf("client", "camera_fov", settings.camera_fov);
+	config_setf("client", "ads_fov", settings.ads_fov);
 	config_seti("client", "hold_down_sights", settings.hold_down_sights);
 	config_setf("client", "chat_shadow", settings.chat_shadow);
 	config_seti("client", "chat_flip_on_open", settings.chat_flip_on_open);
@@ -162,7 +163,8 @@ static int config_read_key(void* user, const char* section, const char* name, co
 		IMPORT_SETTING(settings.invert_y, inverty, atoi(value));
 		IMPORT_SETTING(settings.smooth_fog, smooth_fog, atoi(value));
 		IMPORT_SETTING(settings.ambient_occlusion, ambient_occlusion, atoi(value));
-		IMPORT_SETTING(settings.camera_fov, camera_fov, fmax(fmin(atof(value), CAMERA_MAX_FOV), CAMERA_DEFAULT_FOV));
+		IMPORT_SETTING(settings.camera_fov, camera_fov, fmax(fmin(atof(value), 140.0F), 10.0F));
+		IMPORT_SETTING(settings.ads_fov, ads_fov, fmax(fmin(atof(value), 140.0F), 10.0F));
 		IMPORT_SETTING(settings.hold_down_sights, hold_down_sights, atoi(value));
 		IMPORT_SETTING(settings.chat_shadow, chat_shadow, fmax(0, fmin(1.f, atof(value))));
 		IMPORT_SETTING(settings.chat_flip_on_open, chat_flip_on_open, atoi(value));
@@ -448,10 +450,19 @@ void config_reload() {
 			 &(struct config_setting) {
 				 .value = &settings_tmp.camera_fov,
 				 .type = CONFIG_TYPE_FLOAT,
-				 .min = CAMERA_DEFAULT_FOV,
-				 .max = CAMERA_MAX_FOV,
+				 .min = 10.0F,
+				 .max = 140.0F,
 				 .name = "Camera FOV",
 				 .help = "Field of View in degrees",
+			 });
+	list_add(&config_settings,
+			 &(struct config_setting) {
+				 .value = &settings_tmp.ads_fov,
+				 .type = CONFIG_TYPE_FLOAT,
+				 .min = 10.0F,
+				 .max = 140.0F,
+				 .name = "Aim down sights FOV",
+				 .help = "ADS Field of View in degrees",
 			 });
 	list_add(&config_settings,
 			 &(struct config_setting) {
