@@ -49,7 +49,7 @@ float camera_fov_scaled() {
 
 	if(render_fpv && players[local_id].held_item == TOOL_GUN && players[local_id].input.buttons.rmb
 	   && !players[local_id].input.keys.sprint && players[local_id].alive)
-		return CAMERA_DEFAULT_FOV * atan(tan((CAMERA_DEFAULT_FOV / 180.0F * PI) / 2) / 2.0F) * 2.0F;
+		return settings.ads_fov;
 	return settings.camera_fov;
 }
 
